@@ -1,15 +1,9 @@
 num = int(input('Enter the number: '))
-result = num
-index = 1
+
 def sum_function(x):
-        global index
-        global result
-        if index == num:
+        if x == 1:
                 return 1
         else:
-                result += index
-                index += 1
-                return sum_function(result)
+                return x + sum_function(x - 1)
 
-sum_function(num)
-print ('The number is ' + str(result))
+print ('The number is ' + str(sum_function(num)))
