@@ -1,26 +1,35 @@
-import math										# For sqrt()
+# For sqrt()
+import math
 
-def factorization(x, y = 2):					# Takes a number and a prime (starts with 2)
-	if isPrime(y) == False:						# If y (divisor) is not a prime number, increment until it is (default: 2)
+# Function to find prime factors
+def factorization(primeArr, x, y = 2):
+	if isPrime(y) == False:
 		y += 1
-		return factorization(x, y)
-	elif isPrime(x) == True:					# If x (dividend) is a prime number, it's the final factor
-		return int(x)
+		return factorization(primeArr, x, y)
+	elif isPrime(x) == True:
+		primeArr.extend([int(x)])
+		return primeArr
 	elif isPrime(x) == False:
-		if x % y == 0:							# If y divides x, print y and repeat with x = x / y
-			print(int(y))
-			return factorization(x / y, y)
-		elif x % y != 0:						# If not, bump y up 1 which will trigger the first IF statement to increment y
+		if x % y == 0:
+			primeArr.extend([y])
+			return factorization(primeArr, x / y, y)
+		elif x % y != 0:
 			y += 1
-			return factorization(x, y)
+			return factorization(primeArr, x, y)
 
-def isPrime(n, m = 2):							# Takes a number to test and a potential factor (default: 2)
-	if m > math.sqrt(n):						# If m increments above sqrt(n) then it's a prime
+# Function to find if a number is prime
+def isPrime(n, m = 2):
+	if m > math.sqrt(n):
 		return True
-	elif n % m == 0:							# If the numbers divide evenly before m > sqrt(n) it's composite
+	elif n % m == 0:
 		return False
-	else:										# If both conditions fail, increment m
+	else:
 		return isPrime(n, m + 1)
 
+# User input
 num = int(input('Input a number: '))
-print(factorization(num))
+primeList = []
+factorization(primeList, num)
+
+# Example of array now contained in "primeList"
+print('The prime factors are: ' + str(primeList))
